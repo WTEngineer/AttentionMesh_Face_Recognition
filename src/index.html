@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js and Python</title>
+    <!-- <style>
+      .btn {
+        background-color: #04aa6d;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+    </style> -->
+  </head>
+  <body>
+    <!-- <div>
+      <button
+        class="btn"
+        onclick="detectFeaturePoints()"
+        id="detectBtn"
+        title="Detect feature points from the server."
+      >
+        Feature Point Detection
+      </button>
+    </div> -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- <script>
+      const socket = io("http://localhost:5000");
+      const detectBtn = document.getElementById("detectBtn");
+
+      detectfeatures = () => {
+        socket.emit("detect", "Detecting feature points...");
+      };
+
+      socket.on("detected", (data) => {
+        console.log(data);
+      });
+    </script> -->
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>

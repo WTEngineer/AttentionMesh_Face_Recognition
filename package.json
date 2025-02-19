@@ -1,0 +1,21 @@
+{
+  "name": "electrontest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . MyThreeJSApp --platform=win32 --arch=x64 --out=dist --overwrite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.8.1",
+    "three": "^0.172.0"
+  }
+}
