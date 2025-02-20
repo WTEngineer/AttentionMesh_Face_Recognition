@@ -15,6 +15,11 @@ function createWindow() {
     },
   });
 
+  mainWindow.loadFile("src/index.html");
+
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 app.on("activate", () => {

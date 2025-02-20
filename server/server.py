@@ -37,6 +37,21 @@ def handle_connect():
         thread.daemon = True
         thread.start()
 
+@socketio.on('disconnect')
+def handle_disconnect():
+    print("Client disconnected")
+    clients.remove(request.sid)  # Remove the client session ID when they disconnect
+def display_frames():
+    while True:
+        if not frame_queue.empty():
+            frame = frame_queue.get()
+            cv2.imshow('FaceMesh Detection', frame)
+
+            # Exit on pressing 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+    cv2.destroyAllWindows()
 if __name__ == '__main__':
     # Start the frame display in a separate thread
     display_thread = Thread(target=display_frames)
