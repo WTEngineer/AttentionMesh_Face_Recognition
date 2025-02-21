@@ -41,6 +41,44 @@ def handle_connect():
 def handle_disconnect():
     print("Client disconnected")
     clients.remove(request.sid)  # Remove the client session ID when they disconnect
+
+# Parameters for mapping to a 3D cube
+CUBE_SIZE = 100000
+
+def map_to_cube(landmarks, img_width, img_height):
+    """
+    Normalize landmarks and scale them to fit within a 3D cube.
+    """
+    normalized_landmarks = []
+    for landmark in landmarks:
+        x = landmark.x * img_width
+        y = landmark.y * img_height
+        z = landmark.z * img_width  # Scale z proportionally
+        normalized_landmarks.append((x, y, z))
+    
+    # Center the cube around the face
+    center_x, center_y, center_z = np.mean(normalized_landmarks, axis=0)
+    cube_landmarks = [(point[0] - center_x, point[1] - center_y, point[2] - center_z) for point in normalized_landmarks]
+    cube_landmarks = [(point[0] * CUBE_SIZE / img_width,
+                       point[1] * CUBE_SIZE / img_height,
+                       point[2] * CUBE_SIZE / img_width) for point in cube_landmarks]
+    return cube_landmarks
+
+def visualize_in_3d(landmarks):
+    """
+    Visualize landmarks in a 3D plot using matplotlib.
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    x_coords = [point[0] for point in landmarks]
+    y_coords = [point[1] for point in landmarks]
+    z_coords = [point[2] for point in landmarks]
+
+    ax.scatter(x_coords, y_coords, z_coords, c='r', marker='o')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
 def display_frames():
     while True:
         if not frame_queue.empty():
