@@ -87,6 +87,9 @@ def send_data(client_sid):
     if not cap.isOpened():
         print("Error: Unable to open video source.")
         return
+    prev_time = time.time()  # Track time for frame rate
+
+    while True:
 def display_frames():
     while True:
         if not frame_queue.empty():
