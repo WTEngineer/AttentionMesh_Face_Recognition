@@ -90,6 +90,12 @@ def send_data(client_sid):
     prev_time = time.time()  # Track time for frame rate
 
     while True:
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                print("End of video. Restarting...")
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Restart the video
+                break
 def display_frames():
     while True:
         if not frame_queue.empty():
