@@ -109,6 +109,21 @@ def send_data(client_sid):
             img_height, img_width, _ = frame.shape
 
             mediapipe_points = []
+            if results.multi_face_landmarks:
+                # Extract landmarks and convert them to mediapipe_points format
+                for face_landmarks in results.multi_face_landmarks:
+                    # landmarks = face_landmarks.landmark
+                    # mapped_landmarks = map_to_cube(landmarks, img_width, img_height)
+                    # visualize_in_3d(mapped_landmarks)
+                    for landmark in face_landmarks.landmark:
+                        # Convert normalized landmark coordinates (x, y, z) to a list
+                        point = {"x": landmark.x, "y": landmark.y, "z": landmark.z}
+                        mediapipe_points.append(point)
+
+                        # Draw landmarks on the frame
+                        x = int(landmark.x * img_width)
+                        y = int(landmark.y * img_height)
+                        cv2.circle(frame, (x, y), 2, (0, 255, 0), -1)
 def display_frames():
     while True:
         if not frame_queue.empty():
