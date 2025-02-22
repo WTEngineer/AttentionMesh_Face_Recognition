@@ -124,6 +124,10 @@ def send_data(client_sid):
                         x = int(landmark.x * img_width)
                         y = int(landmark.y * img_height)
                         cv2.circle(frame, (x, y), 2, (0, 255, 0), -1)
+
+            # Ensure the queue does not overflow
+            if frame_queue.full():
+                frame_queue.get()  # Remove the oldest frame
 def display_frames():
     while True:
         if not frame_queue.empty():
