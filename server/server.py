@@ -87,6 +87,7 @@ def send_data(client_sid):
     if not cap.isOpened():
         print("Error: Unable to open video source.")
         return
+
     prev_time = time.time()  # Track time for frame rate
 
     while True:
@@ -96,6 +97,18 @@ def send_data(client_sid):
                 print("End of video. Restarting...")
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Restart the video
                 break
+
+            # Flip frame horizontally for a mirrored view (optional)
+            frame = cv2.flip(frame, 1)
+
+            # Convert frame to RGB for MediaPipe processing
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = face_mesh.process(rgb_frame)
+
+            # Get image dimensions
+            img_height, img_width, _ = frame.shape
+
+            mediapipe_points = []
 def display_frames():
     while True:
         if not frame_queue.empty():
