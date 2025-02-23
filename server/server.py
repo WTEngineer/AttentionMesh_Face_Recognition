@@ -128,6 +128,16 @@ def send_data(client_sid):
             # Ensure the queue does not overflow
             if frame_queue.full():
                 frame_queue.get()  # Remove the oldest frame
+                
+            # Put the frame into the queue for display
+            frame_queue.put(frame)
+
+            # Exit on pressing 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
+                print("Exiting...")
+                return
 def display_frames():
     while True:
         if not frame_queue.empty():
