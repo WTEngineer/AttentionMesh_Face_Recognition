@@ -138,6 +138,18 @@ def send_data(client_sid):
                 cv2.destroyAllWindows()
                 print("Exiting...")
                 return
+
+            # Calculate time to maintain the frame rate (simulate real-time behavior)
+            current_time = time.time()
+            frame_interval = current_time - prev_time
+            if frame_interval >= 1 / 30:  # 30 FPS rate (adjust as needed)
+                # Emit the points to the frontend
+                socketio.emit('mediapipe_data', mediapipe_points, room=client_sid)
+                prev_time = current_time  # Update the previous time to the current time
+
+            # Sleep for a short time to control the frame rate
+            time.sleep(0.01)
+
 def display_frames():
     while True:
         if not frame_queue.empty():
